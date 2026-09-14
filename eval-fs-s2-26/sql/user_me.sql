@@ -1,0 +1,2 @@
+INSERT INTO utilisateur (id_utilisateur, prenom, nom, statut, mot_de_passe, email) VALUES
+(7, 'Elsa', 'BORGET',  'utilisateur',  (SHA2(CONCAT("azerty123"), 256)), 'mariegraceelsa.borget@et.esiea.fr');
