@@ -1,0 +1,25 @@
+{
+  "name": "escape-paws",
+  "version": "1.0.0",
+  "description": "To make it easy for you to get started with GitLab, here's a list of recommended next steps.",
+  "main": "index.js",
+  "scripts": {
+    "start": "node ./bin/www"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://gitlab.esiea.fr/expert/projets/2025s/paris/s1/escape-paws.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "dependencies": {
+    "cookie-parser": "^1.4.7",
+    "express": "^5.2.1",
+    "express-session": "^1.19.0",
+    "http-errors": "^2.0.1",
+    "morgan": "^1.10.1",
+    "nunjucks": "^3.2.4"
+  }
+}
