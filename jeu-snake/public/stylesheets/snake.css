@@ -1,0 +1,123 @@
+body{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #080502;
+    min-width: 100vw;
+    overflow: hidden;
+}
+
+@font-face {
+    font-family: "arcade";
+    src: url("/assets/Arcade.ttf");
+}
+#grille{
+    display: grid;
+    margin: 20px;
+    border: solid 1px green;
+    grid-template-columns: repeat(20, 25px); 
+    grid-template-rows: repeat(20, 25px); 
+    gap: 1px;
+    background-color: green;
+}
+
+#grille div { 
+    width: 25px; 
+    height: 25px; 
+    background-color: rgb(8, 18, 8);
+}
+
+.snake{
+    background-color: #2ecc71 !important;
+    border-radius: 6px;
+    box-shadow: inset 0 0 5px #145a32;
+}
+
+.head{
+    background-color: #27ae60;
+    border-radius: 50%;
+    position: relative;
+}
+
+.head::before,
+.head::after{
+    content: "";
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    background-color: white;
+    border-radius: 50%;
+    top: 6px;
+}
+
+.head::before{
+left: 6px;
+}
+
+.head::after{
+right: 6px;
+}
+
+.tail{
+    background-color: #1e8449;
+    border-radius: 50%;
+}
+
+.cat{
+   
+    background-image: url("/images/chat.png");
+    background-position: center;
+    background-repeat: no-repeat;
+   
+
+}
+
+#grille div.cat{
+    background: url("/images/chat.png") center no-repeat;
+    background-size: cover;
+}
+
+#score{
+    position: absolute;
+    color: green;
+    top: 0%;
+    left: 80%;
+    font-size: 2.5rem;
+    font-family: "Arcade";
+}
+
+#perdu{
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    font-size: 10rem;
+    font-family: "Arcade";
+    color: green;
+    text-shadow: 4px 4px #4cf777;
+}
+
+.hidden{
+    display: none;
+}
+
+#pause{
+    position: absolute;
+    top: 10%;
+    left: 82%;
+    color: white;
+    font-family: "Arcade";
+    font-size: 1.5rem;
+    background-color: green;
+    
+}
+
+#continue{
+    position: absolute;
+    color: green;
+    top: 95%;
+    left: 82%;
+    font-family: "Arcade";
+    font-size: 1.5rem;
+    background-color: rgb(10, 48, 10);
+}
