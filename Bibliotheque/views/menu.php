@@ -233,6 +233,13 @@ $resultat = list_book();
             background: linear-gradient(135deg, var(--maroon), var(--maroon-dark));
             box-shadow: 0 4px 10px rgba(124,42,42,0.35);
         }
+
+        .btn-modify{
+            background: linear-gradient(135deg, var(--wood), var(--wood-dark));
+            box-shadow: 0 4px 10px rgba(78, 43, 43, 0.35);
+        }
+
+
     </style>
 </head>
 <body>
@@ -282,6 +289,7 @@ $resultat = list_book();
                     <td><?= $ligne["First_name"] ?? "" ?> <?= $ligne["Last_name"] ?? "" ?></td>
                     <td>
                         <a href="../controller/delete_book_controller.php?id=<?= $ligne["id_book"] ?>" class="btn btn-delete">Supprimer</a>
+                        <a href="../controller/modify_book.php?id=<?= $ligne["id_book"] ?>" class="btn btn-modify">Modifier</a>
                     </td>
                 </tr>
             <?php } ?>

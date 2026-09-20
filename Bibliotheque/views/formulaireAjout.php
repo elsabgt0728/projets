@@ -1,3 +1,13 @@
+<?php
+session_start();
+require_once '../models/addbook_model.php';
+
+$erreurs   = $_SESSION['erreurs'] ?? [];
+$anciennes = $_SESSION['anciennes'] ?? [];
+unset($_SESSION['erreurs'], $_SESSION['anciennes']); // affichées une seule fois
+
+$categories = get_categories();
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -114,16 +124,51 @@
             text-decoration: none;
         }
         .back-link:hover{ color: var(--maroon); text-decoration: underline; }
+
+        .erreurs {
+            background: #fdecea;
+            border: 1px solid #f5c2c0;
+            border-left: 5px solid #d93025;
+            color: #b3261e;
+            padding: 12px 16px;
+            margin-bottom: 16px;
+            border-radius: 6px;
+            font-size: 0.95rem;
+        }
+        .erreurs ul {
+            margin: 0;
+            padding-left: 18px;
+        }
+
     </style>
 </head>
 <body>
+
+    <?php if (!empty($erreurs)): ?>
+        <div class="erreurs" role="alert">
+            <ul>
+                <?php foreach ($erreurs as $e): ?>
+                    <li><?= htmlspecialchars($e) ?></li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+    <?php endif; ?>
+
     <h1>Ajouter un livre</h1>
 
     <form action="../controller/addbook.php" method="POST">
         <label for="name">Nom du livre:</label>
-        <input type="text" id="namebook" name="namebook">
+        <input type="text" id="namebook" name="namebook" placeholder="Titre" value="<?= htmlspecialchars($anciennes['namebook'] ?? '') ?>">>
         <label for="name">Auteur:</label>
-        <input type="text" id="auteur" name="auteur">
+        <input type="text" id="auteur" name="auteur" placeholder="Auteur" value="<?= htmlspecialchars($anciennes['auteur'] ?? '') ?>">>
+       <?php foreach ($categories as $c): ?>
+        <label>
+            <input type="checkbox" name="categories[]"
+                   value="<?= (int) $c['Categorie_id'] ?>"
+                   <?= in_array($c['Categorie_id'], $anciennes['categories'] ?? []) ? 'checked' : '' ?>>
+            <?= htmlspecialchars($c['Nom']) ?>
+        </label>
+        <?php endforeach; ?>
         <button type="submit">Enregistrer</button>
     </form>
 </body>
