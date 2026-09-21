@@ -9,7 +9,7 @@ function add_book($namebook, $autor, array $categories) //un livre peut avoir pl
     global $pdo;
 
     if (empty($categories)) {
-        throw new InvalidArgumentException('Au moins une catégorie est requise.');
+        throw new InvalidArgumentException('Au moins une catégorie est requise.'); // ERREUR : Uncaught InvalidArgumentException: Au moins une catégorie est requise.
     }
 
     $pdo->beginTransaction(); // Soit toutes les requêtes réussissent, soit aucune n'est enregistrée.
@@ -24,7 +24,7 @@ function add_book($namebook, $autor, array $categories) //un livre peut avoir pl
             ":auteur"   => $autor
         ]);
 
-        $bookId = (int) $pdo->lastInsertId();
+        $bookId = (int) $pdo->lastInsertId(); // ID du dernier livre inséré (livre)
 
         // 2. Une ligne par catégorie dans la table d'association
         $liaison = $pdo->prepare("

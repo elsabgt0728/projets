@@ -289,7 +289,7 @@ $resultat = list_book();
                     <td><?= $ligne["First_name"] ?? "" ?> <?= $ligne["Last_name"] ?? "" ?></td>
                     <td>
                         <a href="../controller/delete_book_controller.php?id=<?= $ligne["id_book"] ?>" class="btn btn-delete">Supprimer</a>
-                        <a href="../controller/modify_book.php?id=<?= $ligne["id_book"] ?>" class="btn btn-modify">Modifier</a>
+                        <a href="../views/formulaireModification.php?id=<?= $ligne["id_book"] ?>" class="btn btn-modify">Modifier</a>
                     </td>
                 </tr>
             <?php } ?>

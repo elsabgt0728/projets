@@ -1,24 +1,30 @@
-
 <?php
 session_start();
-require_once '../models/addbook_model.php';
-
-$formulaire = "../views/formulaireAjout.php"; 
+require_once '../models/editbook_model.php';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: $formulaire");
+    header("Location: ../views/menu.php");
     exit;
 }
 
-$namebook   = htmlspecialchars(trim($_POST["namebook"] ?? ""));
-$autor      = htmlspecialchars(trim($_POST["auteur"] ?? ""));
+$id         = (int) ($_POST["id"] ?? 0);
+$namebook   = trim($_POST["namebook"] ?? "");
+$autor      = trim($_POST["auteur"] ?? "");
 $categories = $_POST["categories"] ?? [];
+
+$formulaire = "../views/formulaireModification.php?id=" . $id;
+
+// Le livre doit exister
+if ($id <= 0 || !get_book($id)) {
+    header("Location: ../views/menu.php");
+    exit;
+}
 
 // Nettoyage : tableau d'entiers positifs uniquement
 if (!is_array($categories)) {
     $categories = [];
 }
-$categories = array_values(array_filter(array_map('intval', $categories), fn($id) => $id > 0));
+$categories = array_values(array_filter(array_map('intval', $categories), fn($c) => $c > 0));
 
 // Validation
 $erreurs = [];
@@ -39,12 +45,12 @@ if (!empty($erreurs)) {
     exit;
 }
 
-// Insertion
+// Modification
 try {
-    add_book($namebook, $autor, $categories);
+    update_book($id, $namebook, $autor, $categories);
 } catch (Throwable $e) {
-    error_log($e->getMessage()); // détail dans les logs, pas à l'écran (C:/xamp/apache/logs/error.log)
-    $_SESSION['erreurs']   = ["Une erreur est survenue lors de l'enregistrement."];
+    error_log($e->getMessage());
+    $_SESSION['erreurs']   = ["Une erreur est survenue lors de la modification."];
     $_SESSION['anciennes'] = ['namebook' => $namebook, 'auteur' => $autor, 'categories' => $categories];
     header("Location: $formulaire");
     exit;
