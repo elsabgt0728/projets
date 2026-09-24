@@ -9,7 +9,7 @@ function adherent_exits($email,$mdp)
      global $pdo;
 
     $requete = $pdo->prepare("
-        SELECT mot_de_passe
+        SELECT mot_de_passe, id_utilisateur
         FROM utilisateur
         WHERE 
         email = :email
@@ -28,7 +28,12 @@ function adherent_exits($email,$mdp)
     }
 
     // 3. On compare le mot de passe en clair avec le hash stocké
-    return password_verify($mdp, $utilisateur['mot_de_passe']);
+   
+    if (!password_verify($mdp, $utilisateur['mot_de_passe'])) {
+        return false;
+    }
+
+    return $utilisateur; 
 }
 
 /* <?php

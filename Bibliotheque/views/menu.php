@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require_once '../models/book_model.php';
 $resultat = list_book();
 

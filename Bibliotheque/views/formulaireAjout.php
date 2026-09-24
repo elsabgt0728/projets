@@ -2,6 +2,11 @@
 session_start();
 require_once '../models/addbook_model.php';
 
+if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== true){
+    header("Location: ../views/login.php");
+exit;
+}
+
 $erreurs   = $_SESSION['erreurs'] ?? [];
 $anciennes = $_SESSION['anciennes'] ?? [];
 unset($_SESSION['erreurs'], $_SESSION['anciennes']); // affichées une seule fois
@@ -18,7 +23,7 @@ $categories = get_categories();
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
-        :root{
+        :root{ 
             --cream: #f6efe3;
             --wood: #6b4226;
             --wood-dark: #4a2c1a;

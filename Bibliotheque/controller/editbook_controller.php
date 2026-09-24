@@ -2,6 +2,11 @@
 session_start();
 require_once '../models/editbook_model.php';
 
+if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== true){
+    header("Location: ../views/login.php");
+exit;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: ../views/menu.php");
     exit;

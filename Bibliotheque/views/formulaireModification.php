@@ -1,5 +1,13 @@
 <?php
 session_start();
+
+require_once '../models/addbook_model.php';
+
+if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== true){
+    header("Location: ../views/login.php");
+exit;
+}
+
 require_once '../models/editbook_model.php';
 
 // 1. Quel livre modifier ? (id dans l'URL : editbook.php?id=3)

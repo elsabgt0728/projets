@@ -144,7 +144,7 @@ CREATE TABLE users (
 - [x] Modification d'un livre existant (CRUD complet)
 - [x] Plusieurs catégories par livre (relation N:N)
 - [x] Authentification (connexion requise pour gérer le catalogue)
-- [ ] Interface de gestion des catégories (créer, renommer, supprimer depuis l'application, sans passer par phpMyAdmin)
+- [x] Interface de gestion des catégories (créer, renommer, supprimer depuis l'application, sans passer par phpMyAdmin)
 - [ ] Recherche et filtres dans le catalogue
 - [ ] Confirmation avant suppression
 - [ ] Dates d'emprunt / retour prévu + détection des retards

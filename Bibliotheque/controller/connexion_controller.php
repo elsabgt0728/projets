@@ -13,9 +13,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
 
     if (isset($email) && isset($mdp)) {
-        if (adherent_exits( $email, $mdp)) {
+
+            $utilisateur = adherent_exits($email, $mdp);
+
+        if ($utilisateur) {
 
             $_SESSION["isAuthenticated"] =true;
+            $_SESSION["id_utilisateur"] =  $utilisateur['id_utilisateur'];  
 
             header("Location: ../views/equipements.php");
             exit();
