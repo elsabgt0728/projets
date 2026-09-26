@@ -1,7 +1,8 @@
 <?php
 session_start();
 require_once '../models/book_model.php';
-$resultat = list_book();
+$recherche = $_GET["recherche"] ?? "";
+$resultat = list_book($recherche);
 
 ?>
 
@@ -130,9 +131,12 @@ $resultat = list_book();
 
         /* ---------- Tableau : liste des livres ---------- */
         .content{
+            gap : 20px;
             padding: 56px 40px;
             display: flex;
             justify-content: center;
+            flex-direction : column
+
         }
 
         .table-wrap{
@@ -239,6 +243,9 @@ $resultat = list_book();
             box-shadow: 0 4px 10px rgba(78, 43, 43, 0.35);
         }
 
+        .content, form, input {
+            width: 95%;
+        }
 
     </style>
 </head>
@@ -253,15 +260,30 @@ $resultat = list_book();
     </label>
 
     <nav>
+ <?php if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== true){ ?>
+
+    <a href="login.php">se connecter</a>
+
+ <?php } else {?>
 
       <a href="formulaireAjout.php">Ajouter un livre</a>
       <a href="formulaireEmprunt.php">Enregistrer un emprunt</a>
       <a href="formulaireRetour.php">Enregistrer un retour</a>
 
+<?php } ?>
+
     </nav>
   </div>
 
+
+
   <div class="content">
+
+    <form action="menu.php" method="GET">
+        <input type="text" name="recherche" value="<?= htmlspecialchars($_GET["recherche"]?? "" )?>" placeholder="Rechercher un titre ou un auteur..." >
+        <button type="submit">Rechercher</button>
+    </form>
+
     <div class="table-wrap">
         <table>
             <caption>Catalogue de la bibliothèque</caption>

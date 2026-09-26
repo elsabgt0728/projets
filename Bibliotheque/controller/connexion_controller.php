@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["isAuthenticated"] =true;
             $_SESSION["id_utilisateur"] =  $utilisateur['id_utilisateur'];  
 
-            header("Location: ../views/equipements.php");
+            header("Location: ../views/menu.php");
             exit();
         }
         else
