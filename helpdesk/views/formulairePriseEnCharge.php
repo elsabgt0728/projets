@@ -1,12 +1,5 @@
 <?php
-session_start();
-
-if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== true){
-    header("Location: ../views/login.php");
-exit;
-}
-
-require_once '../models/addbook_model.php';
+require_once '../models/prise_en_charge_model.php';
 ?>
 
 <!DOCTYPE html>
@@ -21,18 +14,17 @@ require_once '../models/addbook_model.php';
     
 </head>
 <body>
-    <h1>Ajouter un emprunteur</h1>
+    <h1>Prendre en charge un ticket</h1>
 
-    <form action="../controller/addBorrower.php" method="POST">
-        <label for="name">Nom du livre :</label>
-        <input type="text" id=namebook name="namebook">
+    <form action="../controller/prise_en_charge_controller.php" method="POST">
+        <label for="name">Ticket à prendre en charge (titre) :</label>
+        <input type="text" id="titre" name="titre">
 
-        <label for="name">Nom de l'emprunteur :</label>
-        <input type="text" id="nameborrower" name="nameborrower">
+        <label for="nomtechnicien">Nom du technicien :</label>
+        <input type="text" id="nomtechnicien" name="nomtechnicien">
 
-        <label for="surname">Prenom de l'emprunteur :</label>
-        <input type="text" id="surnameborrower" name="surnameborrower">
-
+        <label for="prenomtechnicien">Prénom du technicien :</label>
+       <input type="text" id="prenomtechnicien" name="prenomtechnicien">
         <button type="submit">Enregistrer</button>
     </form>
 </body>

@@ -1,18 +1,6 @@
-<?php
-session_start();
-require_once '../models/addbook_model.php';
-
-if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== true){
-    header("Location: ../views/login.php");
-exit;
-}
-
-$erreurs   = $_SESSION['erreurs'] ?? [];
-$anciennes = $_SESSION['anciennes'] ?? [];
-unset($_SESSION['erreurs'], $_SESSION['anciennes']); // affichées une seule fois
-
-$categories = get_categories();
-?>
+<?php 
+ require_once '../models/ticket_model.php';
+ ?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -26,31 +14,15 @@ $categories = get_categories();
 </head>
 <body>
 
-    <?php if (!empty($erreurs)): ?>
-        <div class="erreurs" role="alert">
-            <ul>
-                <?php foreach ($erreurs as $e): ?>
-                    <li><?= htmlspecialchars($e) ?></li>
-                <?php endforeach; ?>
-            </ul>
-        </div>
-    <?php endif; ?>
+    <h1>Signaler un incident</h1>
 
-    <h1>Ajouter un livre</h1>
-
-    <form action="../controller/addbook.php" method="POST">
-        <label for="name">Nom du livre:</label>
-        <input type="text" id="namebook" name="namebook" placeholder="Titre" value="<?= htmlspecialchars($anciennes['namebook'] ?? '') ?>">>
-        <label for="name">Auteur:</label>
-        <input type="text" id="auteur" name="auteur" placeholder="Auteur" value="<?= htmlspecialchars($anciennes['auteur'] ?? '') ?>">>
-       <?php foreach ($categories as $c): ?>
-        <label>
-            <input type="checkbox" name="categories[]"
-                   value="<?= (int) $c['Categorie_id'] ?>"
-                   <?= in_array($c['Categorie_id'], $anciennes['categories'] ?? []) ? 'checked' : '' ?>>
-            <?= htmlspecialchars($c['Nom']) ?>
-        </label>
-        <?php endforeach; ?>
+    <form action="../controller/creation_ticket_controller.php" method="POST">
+        <label for="name">Titre de l'incident :</label>
+        <input type="text" id="titre" name="titre" placeholder="Imprimante RH hors service" value="<?= htmlspecialchars($anciennes['titre'] ?? '') ?>">>
+        
+        <label for="description">Description :</label>
+        <textarea id="description" name="description" placeholder="Détaillez le problème rencontré"><?= htmlspecialchars($anciennes['description'] ?? '') ?></textarea>
+        
         <button type="submit">Enregistrer</button>
     </form>
 </body>

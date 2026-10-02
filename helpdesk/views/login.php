@@ -1,5 +1,5 @@
 <?php
-session_start()
+session_start();
 ?>
 
 <!DOCTYPE html>
@@ -7,7 +7,7 @@ session_start()
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Connexion — Bibliothèque</title>
+    <title>Connexion — HelpDesk IT</title>
     <link rel="stylesheet" href="../public/style.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -18,10 +18,10 @@ session_start()
     <div class="auth">
 
         <div class="auth-brand">
-            <div class="brand-icon">📖</div>
-            <h1>Bibliothèque</h1>
+            <div class="brand-icon">🎫</div>
+            <h1>HelpDesk IT</h1>
             <div class="brand-divider"></div>
-            <p>Gérez le catalogue, les emprunts et les retours en toute simplicité.</p>
+            <p>Suivez, assignez et résolvez les incidents du support interne.</p>
         </div>
 
         <div class="auth-form">
@@ -59,7 +59,7 @@ session_start()
                 <button type="submit">Se connecter →</button>
             </form>
 
-            <a class="back-link" href="menu.php">← Retour au catalogue</a>
+            <a class="back-link" href="dashboard.php">← Retour au tableau de bord</a>
         </div>
 
     </div>

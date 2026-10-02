@@ -1,35 +1,25 @@
 <?php
 session_start();
 
-require_once '../models/addbook_model.php';
-
-if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== true){
-    header("Location: ../views/login.php");
-exit;
-}
-
 require_once '../models/editbook_model.php';
+require_once '../models/edit_ticket_model.php';
 
-// 1. Quel livre modifier ? (id dans l'URL : editbook.php?id=3)
+
 $id   = (int) ($_GET['id'] ?? 0);
-$book = get_book($id);
+$book = $book = get_ticket($id);
 
 if (!$book) {
-    header("Location: menu.php");
+    header("Location: dashboard.php");
     exit;
 }
 
-// 2. Erreurs et anciennes valeurs (si on revient après une erreur)
-$erreurs   = $_SESSION['erreurs'] ?? [];
-$anciennes = $_SESSION['anciennes'] ?? [];
-unset($_SESSION['erreurs'], $_SESSION['anciennes']);
 
-// 3. Valeurs à afficher : celles de l'erreur si elles existent, sinon celles de la base
-$titre      = $anciennes['namebook']   ?? $book['namebook'];
-$auteur     = $anciennes['auteur']     ?? $book['auteur'];
-$cochees    = $anciennes['categories'] ?? get_book_categories($id);
+$titre      = $anciennes['titre']   ?? $book['titre'];
+$description     = $anciennes['description']     ?? $book['description'];
+$cochees    = $anciennes['categories'] ?? get_ticket_categories($id);
 
 $categories = get_categories();
+
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +35,7 @@ $categories = get_categories();
 </head>
 <body>
 
-   <h1>Modifier « <?= htmlspecialchars($book['namebook']) ?> »</h1>
+   <h1>Modifier « <?= htmlspecialchars($book['titre']) ?> »</h1>
 
 <?php if (!empty($erreurs)): ?>
     <div class="erreurs" role="alert">
@@ -57,12 +47,13 @@ $categories = get_categories();
     </div>
 <?php endif; ?>
 
-<form method="post" action="../controller/editbook_controller.php">
+<form method="post" action="../controller/edit_ticket_controller.php">
     <!-- L'id voyage dans un champ caché pour que le contrôleur sache quel livre modifier -->
-    <input type="hidden" name="id" value="<?= (int) $book['id_book'] ?>">
+    <input type="hidden" name="id" value="<?= (int) $book['id_ticket'] ?>">
 
-    <input type="text" name="namebook" placeholder="Titre" value="<?= htmlspecialchars($titre) ?>">
-    <input type="text" name="auteur" placeholder="Auteur" value="<?= htmlspecialchars($auteur) ?>">
+    <input type="text" name="titre" placeholder="Titre" value="<?= htmlspecialchars($titre) ?>">
+<textarea name="description" placeholder="Description"><?= htmlspecialchars($description) ?></textarea>
+
 
     <?php foreach ($categories as $c): ?>
         <label>
@@ -74,7 +65,7 @@ $categories = get_categories();
     <?php endforeach; ?>
 
     <button type="submit">Enregistrer</button>
-    <a href="menu.php">Annuler</a>
+    <a href="dashboard.php">Annuler</a>
 </form>
 
 </body>
