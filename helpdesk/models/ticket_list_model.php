@@ -4,25 +4,25 @@ require_once '../config/db_connect.php';
 
 $pdo = getPDOConnection();
 
-function list_book($recherche){
+function list_tickets($recherche){
     global $pdo;
-    $sql = "SELECT 
-            Books.*,
-            borrower.First_name,
-            borrower.Last_name,
-            borrower.borrower_id,                 
+   $sql = "SELECT 
+            tickets.*,
+            technicien.First_name,
+            technicien.Last_name,
+            technicien.technicien_id,                 
             Categorie.nom AS categorie_nom,
             Categorie.Categorie_id,
-            book_categorie.categorie_id AS current_categorie  
-        FROM Books
-        LEFT JOIN borrower ON borrower.borrower_id = Books.borrower_id
-        LEFT JOIN book_categorie ON book_categorie.id_book = Books.id_book
-        LEFT JOIN Categorie ON Categorie.Categorie_id = book_categorie.categorie_id";
+            ticket_categorie.categorie_id AS current_categorie  
+        FROM tickets
+        LEFT JOIN technicien ON technicien.technicien_id = tickets.technicien_id
+        LEFT JOIN ticket_categorie ON ticket_categorie.id_ticket = tickets.id_ticket
+        LEFT JOIN Categorie ON Categorie.Categorie_id = ticket_categorie.categorie_id";
         
       $params = [];
 
     if ($recherche !== "") {
-        $sql .= " WHERE Books.namebook LIKE :recherche1 OR Books.auteur LIKE :recherche2";
+        $sql .= " WHERE tickets.titre LIKE :recherche1 OR tickets.description LIKE :recherche2";
         $params[':recherche1'] = '%' . $recherche . '%';
         $params[':recherche2'] = '%' . $recherche . '%';
     }

@@ -5,15 +5,15 @@ require_once '../config/db_connect.php';
 $pdo = getPDOConnection();
 
 
-function delete_grade($id_book) {
+function delete_ticket($id_ticket) {
     global $pdo;
 
     $requete = $pdo->prepare("
-        DELETE FROM books
-        WHERE id_book = :id_book
+        DELETE FROM tickets
+        WHERE id_ticket = :id_ticket
     ");
 
     $requete->execute([
-        ':id_book' => $id_book,
+        ':id_ticket' => $id_ticket,
     ]);
 }

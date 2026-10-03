@@ -4,7 +4,7 @@ require_once '../config/db_connect.php';
 
 $pdo = getPDOConnection();
 
-function add_book($namebook, $autor, array $categories) //un livre peut avoir plusieurs categories
+ function create_ticket($titre, $description, array $categories) //un ticket peut avoir plusieurs categories
 {
     global $pdo;
 
@@ -16,30 +16,30 @@ function add_book($namebook, $autor, array $categories) //un livre peut avoir pl
     try {
         // 1. Le livre (sans la colonne categorie)
         $requete = $pdo->prepare("
-            INSERT INTO `Books` (`namebook`, `auteur`)
-            VALUES (:namebook, :auteur)
+            INSERT INTO `tickets` (`titre`, `description`)
+        VALUES (:titre, :description)
         ");
         $requete->execute([
-            ":namebook" => $namebook,
-            ":auteur"   => $autor
+            ":titre"       => $titre,
+            ":description" => $description
         ]);
 
-        $bookId = (int) $pdo->lastInsertId(); // ID du dernier livre inséré (livre)
+        $ticketId = (int) $pdo->lastInsertId(); // ID du dernier livre inséré (livre)
 
         // 2. Une ligne par catégorie dans la table d'association
         $liaison = $pdo->prepare("
-            INSERT INTO `book_categorie` (`id_book`, `Categorie_id`)
-            VALUES (:livre, :categorie)
+            INSERT INTO `ticket_categorie` (`id_ticket`, `Categorie_id`)
+            VALUES (:ticket, :categorie)
         ");
         foreach (array_unique($categories) as $catId) {
             $liaison->execute([
-                ":livre"     => $bookId,
+                ":ticket"    => $ticketId,
                 ":categorie" => (int) $catId
             ]);
         }
 
         $pdo->commit();
-        return $bookId;
+        return $ticketId;
     } catch (Throwable $e) {
         $pdo->rollBack();
         throw $e;

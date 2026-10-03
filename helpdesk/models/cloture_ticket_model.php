@@ -4,54 +4,55 @@ require_once '../config/db_connect.php';
 
 $pdo = getPDOConnection();
 
-function get_borrowed_book_by_name($namebook) {
+function get_assigned_ticket_by_titre($titre) {
     global $pdo;
 
     $stmt = $pdo->prepare("
-        SELECT id_book, statut, borrower_id 
-        FROM Books 
-        WHERE LOWER(TRIM(namebook)) = LOWER(TRIM(:namebook)) 
+        SELECT id_ticket, statut, technicien_id 
+        FROM tickets 
+        WHERE LOWER(TRIM(titre)) = LOWER(TRIM(:titre)) 
         FOR UPDATE
     ");
-    $stmt->execute([":namebook" => $namebook]);
+    $stmt->execute([":titre" => $titre]);
     $book = $stmt->fetch(PDO::FETCH_ASSOC);
 
     if (!$book) {
-        throw new Exception("Aucun livre trouvé avec le nom « $namebook ».");
+        throw new Exception("Aucun ticket trouvé avec le nom « $titre ».");
     }
-    if ($book['statut'] !== 'emprunté') {
-        throw new Exception("Ce livre n'est pas actuellement emprunté (statut actuel : {$book['statut']}).");
+    if ($book['statut'] !== 'en_cours') {
+        throw new Exception("Ce ticket n'est pas actuellement emprunté (statut actuel : {$book['statut']}).");
     }
 
-    return $book['id_book'];
+    return $book['id_ticket'];
 }
 
-function return_book($id_book) {
+function resolve_ticket($id_ticket) {
     global $pdo;
 
     $requete = $pdo->prepare("
-        UPDATE Books 
-        SET borrower_id = NULL, statut = 'stock' 
-        WHERE id_book = :id_book
+        UPDATE tickets 
+        SET statut = 'resolu' 
+        WHERE id_ticket = :id_ticket
     ");
     $requete->execute([
-        ":id_book" => $id_book
+        ":id_ticket" => $id_ticket
     ]);
 }
 
-function process_book_return($namebook) {
+function process_ticket_resolution($titre) {
     global $pdo;
 
     try {
         $pdo->beginTransaction(); // Une transaction, c'est un moyen de dire à MySQL : "Je vais faire plusieurs opérations liées entre elles. Soit elles réussissent toutes, soit aucune ne doit avoir d'effet." 
          // Ouvre le brouillon
 
-        $idBook = get_borrowed_book_by_name($namebook); // → si le livre n'existe pas, ça lève une exception ici, on ne va jamais plus loin
+        $idTicket = get_assigned_ticket_by_titre($titre);
+        
+        resolve_ticket($idTicket);
 
-        return_book($idBook);   // UPDATE Books ... (encore "en brouillon")
+        $pdo->commit();
 
-        $pdo->commit();      // Valide définitivement le UPDATE
-        return $idBook;
+        return $idTicket;
 
     } catch (Exception $e) {
         $pdo->rollBack();
