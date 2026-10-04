@@ -1,6 +1,8 @@
 <?php
 session_start();
 require_once '../models/ticket_list_model.php';
+require_once 'helpers.php';
+
 $recherche = $_GET["recherche"] ?? "";
 $resultat = list_tickets($recherche);
 
@@ -48,7 +50,7 @@ $resultat = list_tickets($recherche);
   <div class="content">
 
     <form action="menu.php" method="GET">
-        <input type="text" name="recherche" value="<?= htmlspecialchars($_GET["recherche"]?? "" )?>" placeholder="Rechercher un titre..." >
+        <input type="text" name="recherche" value="<?= htmlspecialchars($_GET["recherche"]?? "" )?>" placeholder="Rechercher un ticket..." >
         <button type="submit">Rechercher</button>
     </form>
 
@@ -74,8 +76,8 @@ $resultat = list_tickets($recherche);
                 <tr>
                     <td><?= $ligne["titre"] ?? "" ?></td>
                     <td><?= $ligne["categorie_nom"] ?? "" ?></td>
-                    <td><?= $ligne["priorite"] ?? "" ?></td>
-                    <td><?= $ligne["statut"] ?? "" ?></td>
+                    <td><?= badge_priorite($ligne["priorite"] ?? "") ?></td>
+                    <td><?= badge_statut($ligne["statut"] ?? "") ?></td>
                     <td><?= $ligne["First_name"] ?? "" ?> <?= $ligne["Last_name"] ?? "" ?></td>
                     <td>
                         <a href="../controller/delete_ticket_controller.php?id=<?= $ligne["id_ticket"] ?>" class="btn btn-delete">Supprimer</a>

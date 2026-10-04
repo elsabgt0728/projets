@@ -22,22 +22,24 @@ function get_ticket_categories($id)
 } 
 
 // Modifie le ticket et remplace ses catégories
-function update_book($id, $titre, $description, array $categories)
+function update_ticket($id, $titre, $description, array $categories)
 {
     global $pdo;
 
+    $priorite = determine_priority($categories);
+
     $pdo->beginTransaction();
     try {
-        // 1. Mise à jour du ticket
         $requete = $pdo->prepare("
             UPDATE `tickets`
-            SET `titre` = :titre, `description` = :description
+            SET `titre` = :titre, `description` = :description, `priorite` = :priorite
             WHERE `id_ticket` = :id
         ");
         $requete->execute([
-            ":titre" => $titre,
-            ":description"   => $description,
-            ":id"       => $id
+            ":titre"       => $titre,
+            ":description" => $description,
+            ":priorite"    => $priorite,
+            ":id"          => $id
         ]);
 
         // 2. On supprime les anciennes liaisons

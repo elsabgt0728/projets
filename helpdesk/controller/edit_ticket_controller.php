@@ -52,7 +52,7 @@ if (!empty($erreurs)) {
 
 // Modification
 try {
-    update_book($id, $titre, $description, $categories);
+    update_ticket($id, $titre, $description, $categories);
 } catch (Throwable $e) {
     error_log($e->getMessage());
     $_SESSION['erreurs']   = ["Une erreur est survenue lors de la modification."];
