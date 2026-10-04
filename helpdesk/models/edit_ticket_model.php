@@ -16,13 +16,13 @@ function get_ticket_categories($id)
 {
     global $pdo;
 
-    $requete = $pdo->prepare("SELECT `Categorie_id` FROM `book_categorie` WHERE `id_ticket` = :id");
+    $requete = $pdo->prepare("SELECT `Categorie_id` FROM `ticket_categorie` WHERE `id_ticket` = :id");
     $requete->execute([":id" => $id]);
     return array_map('intval', $requete->fetchAll(PDO::FETCH_COLUMN));
-}
+} 
 
 // Modifie le ticket et remplace ses catégories
-function update_book($id, $titre, $autor, array $categories)
+function update_book($id, $titre, $description, array $categories)
 {
     global $pdo;
 
@@ -41,12 +41,12 @@ function update_book($id, $titre, $autor, array $categories)
         ]);
 
         // 2. On supprime les anciennes liaisons
-        $requete = $pdo->prepare("DELETE FROM `book_Categorie` WHERE `id_ticket` = :id");
+        $requete = $pdo->prepare("DELETE FROM `ticket_categorie` WHERE `id_ticket` = :id");
         $requete->execute([":id" => $id]);
 
         // 3. On recrée les liaisons cochées
         $liaison = $pdo->prepare("
-            INSERT INTO `book_categorie` (`id_ticket`, `Categorie_id`)
+            INSERT INTO `ticket_categorie` (`id_ticket`, `Categorie_id`)
             VALUES (:ticket, :categorie)
         ");
         foreach (array_unique($categories) as $catId) {

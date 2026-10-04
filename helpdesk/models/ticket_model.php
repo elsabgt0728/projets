@@ -6,7 +6,7 @@ $pdo = getPDOConnection();
 
  function create_ticket($titre, $description, array $categories) //un ticket peut avoir plusieurs categories
 {
-    global $pdo;
+    global $pdo; 
 
     if (empty($categories)) {
         throw new InvalidArgumentException('Au moins une catégorie est requise.'); // ERREUR : Uncaught InvalidArgumentException: Au moins une catégorie est requise.

@@ -21,13 +21,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["isAuthenticated"] =true;
             $_SESSION["id_utilisateur"] =  $utilisateur['id_utilisateur'];  
 
-            header("Location: ../views/menu.php");
+            header("Location: ../views/dashboard.php");
             exit();
         }
         else
             {
-                $erreur = "Nope !";
-                include "../views/connexion.php";
+                $erreur = "Identifiant ou mot de passe incorrect.";
+                include "../views/login.php";
             }
     }
 

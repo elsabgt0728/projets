@@ -7,15 +7,15 @@ if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== tr
 exit;
 }
 
-require_once '../models/delete_model.php';
+require_once '../models/delete_ticket_model.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
 
-    $id_book = $_GET["id"];
+    $id_ticket = $_GET["id"];
 
 }
 
-delete_grade($id_book);
+delete_ticket($id_ticket);
 
-    header("Location: ../views/menu.php");
+    header("Location: ../views/dashboard.php");
     exit();

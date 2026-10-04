@@ -53,7 +53,7 @@ function assign_ticket_to_technicien($id_ticket, $technicien_id) {
     ]);
 }
 
-function add_technicien_and_assign_book($last_name, $first_name, $titre) {
+function add_technicien_and_assign_ticket($last_name, $first_name, $titre) {
     global $pdo;
 
     try {

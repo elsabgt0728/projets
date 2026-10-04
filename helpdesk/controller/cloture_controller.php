@@ -6,22 +6,22 @@ if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== tr
 exit;
 }
 
-require_once '../models/returnbook_model.php';
+require_once '../models/cloture_ticket_model.php';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-    $namebook = htmlspecialchars(trim($_POST["namebook"] ?? ""));
+    $titre = htmlspecialchars(trim($_POST["titre"] ?? ""));
 } else {
-    $namebook = "";
+    $titre = "";
 }
 
-if ($namebook === "") {
-    echo "Le nom du livre ne peut pas être vide.";
+if ($titre === "") {
+    echo "Le titre du ticket ne peut pas être vide.";
     exit;
 }
 
 try {
-    process_book_return($namebook);
-    header("Location: ../views/menu.php");
+    process_ticket_resolution($titre);
+    header("Location: ../views/dashboard.php");
     exit();
 } catch (Exception $e) {
     echo "Erreur : " . $e->getMessage();

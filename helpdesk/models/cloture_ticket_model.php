@@ -20,7 +20,7 @@ function get_assigned_ticket_by_titre($titre) {
         throw new Exception("Aucun ticket trouvé avec le nom « $titre ».");
     }
     if ($book['statut'] !== 'en_cours') {
-        throw new Exception("Ce ticket n'est pas actuellement emprunté (statut actuel : {$book['statut']}).");
+        throw new Exception("Ce ticket n'est pas actuellement en cours de resolution (statut actuel : {$book['statut']}).");
     }
 
     return $book['id_ticket'];

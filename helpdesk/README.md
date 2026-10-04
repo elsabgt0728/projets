@@ -27,7 +27,7 @@ Application de gestion de tickets pour le support informatique interne d'une ent
 - [ ] **Filtres combinés** — par statut et par catégorie, en plus de la recherche texte déjà existante.
 - [ ] **Protection CSRF** sur tous les formulaires (jeton caché vérifié côté serveur) — bon point à mettre en avant en entretien.
 - [ ] **Pagination** de la liste de tickets (au-delà de ~20 lignes).
-- [ ] **Tests unitaires** (PHPUnit) sur les fonctions des models (`create_ticket`, `assign_ticket_to_technicien`, etc.) — très valorisé pour une alternance.
+- [ ] **Tests unitaires** (PHPUnit) sur les fonctions des models (`create_ticket`, `assign_ticket_to_technicien`, etc.).
 - [ ] **Export CSV** de la liste des tickets (fonctionnalité simple à fort effet démo).
 
 ---

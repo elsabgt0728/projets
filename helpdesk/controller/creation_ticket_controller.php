@@ -7,17 +7,17 @@ if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== tr
 exit;
 }
 
-require_once '../models/addbook_model.php';
+require_once '../models/ticket_model.php';
 
-$formulaire = "../views/formulaireAjout.php"; 
+$formulaire = "../views/formulaireCreationTicket.php"; 
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     header("Location: $formulaire");
     exit;
 }
 
-$namebook   = htmlspecialchars(trim($_POST["namebook"] ?? ""));
-$autor      = htmlspecialchars(trim($_POST["auteur"] ?? ""));
+$titre   = htmlspecialchars(trim($_POST["titre"] ?? ""));
+$description     = htmlspecialchars(trim($_POST["description"] ?? ""));
 $categories = $_POST["categories"] ?? [];
 
 // Nettoyage : tableau d'entiers positifs uniquement
@@ -28,11 +28,11 @@ $categories = array_values(array_filter(array_map('intval', $categories), fn($id
 
 // Validation
 $erreurs = [];
-if ($namebook === "") {
+if ($titre === "") {
     $erreurs[] = "Le titre est obligatoire.";
 }
-if ($autor === "") {
-    $erreurs[] = "L'auteur est obligatoire.";
+if ($description=== "") {
+    $erreurs[] = "La description est obligatoire.";
 }
 if (empty($categories)) {
     $erreurs[] = "Choisissez au moins une catégorie.";
@@ -40,21 +40,21 @@ if (empty($categories)) {
 
 if (!empty($erreurs)) {
     $_SESSION['erreurs']   = $erreurs;
-    $_SESSION['anciennes'] = ['namebook' => $namebook, 'auteur' => $autor, 'categories' => $categories];
+    $_SESSION['anciennes'] = ['titre' => $titre, 'description' => $description, 'categories' => $categories];
     header("Location: $formulaire");
     exit;
 }
 
 // Insertion
 try {
-    add_book($namebook, $autor, $categories);
+    create_ticket($titre, $description, $categories);
 } catch (Throwable $e) {
     error_log($e->getMessage()); // détail dans les logs, pas à l'écran (C:/xamp/apache/logs/error.log)
     $_SESSION['erreurs']   = ["Une erreur est survenue lors de l'enregistrement."];
-    $_SESSION['anciennes'] = ['namebook' => $namebook, 'auteur' => $autor, 'categories' => $categories];
+    $_SESSION['anciennes'] = ['titre' => $titre, 'description' => $description, 'categories' => $categories];
     header("Location: $formulaire");
     exit;
 }
 
-header("Location: ../views/menu.php");
+header("Location: ../views/dashboard.php");
 exit;

@@ -1,8 +1,11 @@
 <?php
 session_start();
 
-require_once '../models/editbook_model.php';
 require_once '../models/edit_ticket_model.php';
+if( !isset ($_SESSION["isAuthenticated"]) || $_SESSION["isAuthenticated"] !== true){
+    header("Location: ../views/login.php");
+    exit;
+}
 
 
 $id   = (int) ($_GET['id'] ?? 0);
@@ -13,6 +16,9 @@ if (!$book) {
     exit;
 }
 
+$erreurs   = $_SESSION['erreurs'] ?? [];
+$anciennes = $_SESSION['anciennes'] ?? [];
+unset($_SESSION['erreurs'], $_SESSION['anciennes']);
 
 $titre      = $anciennes['titre']   ?? $book['titre'];
 $description     = $anciennes['description']     ?? $book['description'];

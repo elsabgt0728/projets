@@ -48,7 +48,7 @@ $resultat = list_tickets($recherche);
   <div class="content">
 
     <form action="menu.php" method="GET">
-        <input type="text" name="recherche" value="<?= htmlspecialchars($_GET["recherche"]?? "" )?>" placeholder="Rechercher un titre ou un auteur..." >
+        <input type="text" name="recherche" value="<?= htmlspecialchars($_GET["recherche"]?? "" )?>" placeholder="Rechercher un titre..." >
         <button type="submit">Rechercher</button>
     </form>
 
