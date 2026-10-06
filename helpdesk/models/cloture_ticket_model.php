@@ -1,6 +1,7 @@
 <?php
 
 require_once '../config/db_connect.php';
+require_once 'ticket_model.php';
 
 $pdo = getPDOConnection();
 
@@ -49,6 +50,7 @@ function process_ticket_resolution($titre) {
         $idTicket = get_assigned_ticket_by_titre($titre);
         
         resolve_ticket($idTicket);
+        log_historique($idTicket, "cloture");
 
         $pdo->commit();
 

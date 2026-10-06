@@ -4,7 +4,10 @@ require_once '../models/ticket_list_model.php';
 require_once 'helpers.php';
 
 $recherche = $_GET["recherche"] ?? "";
+$triStatut = $_GET["statut"];
+$triCat = $_GET["categorie"];
 $resultat = list_tickets($recherche);
+$stats = count_tickets_by_statut();
 
 ?>
 
@@ -54,6 +57,23 @@ $resultat = list_tickets($recherche);
         <button type="submit">Rechercher</button>
     </form>
 
+
+    <div class="stat-row">
+    <div class="stat-card ouvert">
+        <div class="value"><?= $stats['ouvert'] ?></div>
+        <div class="label">Tickets ouverts</div>
+    </div>
+    <div class="stat-card encours">
+        <div class="value"><?= $stats['en_cours'] ?></div>
+        <div class="label">En cours</div>
+    </div>
+    <div class="stat-card resolu">
+        <div class="value"><?= $stats['resolu'] ?></div>
+        <div class="label">Résolus</div>
+    </div>
+</div>
+
+
     <div class="table-wrap">
         <table>
             <caption>Tickets du support IT</caption>
@@ -82,6 +102,7 @@ $resultat = list_tickets($recherche);
                     <td>
                         <a href="../controller/delete_ticket_controller.php?id=<?= $ligne["id_ticket"] ?>" class="btn btn-delete">Supprimer</a>
                         <a href="../views/formulaireModificationTicket.php?id=<?= $ligne["id_ticket"] ?>" class="btn btn-modify">Modifier</a>
+                        <a href="../views/ticketDetail.php?id=<?= $ligne["id_ticket"] ?>" class="btn btn-modify">Historique</a>
                     </td>
                 </tr>
             <?php } ?>

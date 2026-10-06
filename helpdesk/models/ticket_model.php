@@ -2,6 +2,7 @@
 
 require_once '../config/db_connect.php';
 
+
 $pdo = getPDOConnection();
 
  function create_ticket($titre, $description, array $categories) //un ticket peut avoir plusieurs categories
@@ -40,6 +41,8 @@ $pdo = getPDOConnection();
                 ":categorie" => (int) $catId
             ]);
         }
+
+        log_historique($ticketId, "creation");
 
         $pdo->commit();
         return $ticketId;
@@ -84,4 +87,32 @@ function determine_priority(array $categoryIds)
         2 => 'moyenne',
         default => 'basse',
     };
+}
+
+function log_historique($id_ticket, $action){
+
+     global $pdo;
+     $requete = $pdo->prepare(" 
+     INSERT INTO `ticket_historique` (`id_ticket`, `action`)
+     VALUES (:id_ticket, :action) ");
+
+        $requete->execute([
+            ":id_ticket" => $id_ticket,
+            ":action" => $action
+        ]);
+
+}
+
+
+function recup_historique($id_ticket){
+    global $pdo;
+    $requete = $pdo->prepare(" 
+    SELECT action, date_action FROM ticket_historique WHERE id_ticket = :id_ticket
+    ORDER BY date_action ASC");
+
+    $requete->execute([
+            ":id_ticket" => $id_ticket,
+             ]);
+
+     return $requete->fetchAll(PDO::FETCH_ASSOC);
 }

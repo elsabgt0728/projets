@@ -20,3 +20,26 @@ function badge_priorite($priorite)
 
     return "<span class=\"badge {$classe}\">{$label}</span>";
 }
+
+function badge_action($action)
+{
+    $labels = [
+        'creation'        => 'Ticket créé',
+        'prise_en_charge' => 'Pris en charge',
+        'cloture'         => 'Clôturé',
+    ];
+
+    // Réutilise les couleurs déjà définies pour les statuts : logique, une création
+    // "ouvre" le ticket (bleu), une prise en charge le met "en cours" (orange),
+    // une clôture le "résout" (vert).
+    $classes = [
+        'creation'        => 'badge-ouvert',
+        'prise_en_charge' => 'badge-encours',
+        'cloture'         => 'badge-resolu',
+    ];
+
+    $classe = $classes[$action] ?? 'badge-ouvert';
+    $label  = $labels[$action] ?? htmlspecialchars($action);
+
+    return "<span class=\"badge {$classe}\">{$label}</span>";
+}

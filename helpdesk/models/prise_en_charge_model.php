@@ -1,6 +1,7 @@
 <?php
 
 require_once '../config/db_connect.php';
+require_once 'ticket_model.php';
 
 $pdo = getPDOConnection();
 
@@ -62,6 +63,7 @@ function add_technicien_and_assign_ticket($last_name, $first_name, $titre) {
          $idTicket     = get_ticket_by_titre($titre);
         $technicienId = add_technicien($last_name, $first_name);
         assign_ticket_to_technicien($idTicket, $technicienId);
+        log_historique($idTicket, "prise_en_charge");
 
         $pdo->commit();
         return $technicienId;

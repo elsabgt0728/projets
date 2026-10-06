@@ -4,7 +4,7 @@ require_once '../config/db_connect.php';
 
 $pdo = getPDOConnection();
 
-function list_tickets($recherche){
+function list_tickets($recherche, $statut, $categorie){
     global $pdo;
    $sql = "SELECT 
             tickets.*,
@@ -31,5 +31,19 @@ function list_tickets($recherche){
     $requete->execute($params);
 
     return $requete->fetchAll(PDO::FETCH_ASSOC);
+}
+
+function count_tickets_by_statut()
+{
+    global $pdo;
+
+    $compteurs = [];
+    foreach (['ouvert', 'en_cours', 'resolu'] as $statut) {
+        $requete = $pdo->prepare("SELECT COUNT(*) FROM tickets WHERE statut = :statut");
+        $requete->execute([":statut" => $statut]);
+        $compteurs[$statut] = (int) $requete->fetchColumn();
+    }
+
+    return $compteurs;
 }
 

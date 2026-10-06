@@ -8,7 +8,7 @@ Application de gestion de tickets pour le support informatique interne d'une ent
 
 ## 1. Fonctionnalités
 
-### Déjà implémentées (dans la version bibliothèque, à renommer/adapter)
+### Déjà implémentées (dans la version bibliothèque,  à renommer/adapter)
 
 - [x] **Authentification technicien** — session PHP, mot de passe hashé (`password_hash` / `password_verify`), redirection si non connecté sur toutes les pages protégées.
 - [x] **Tableau de bord** — liste de tous les tickets avec recherche texte (titre / description).
@@ -21,9 +21,9 @@ Application de gestion de tickets pour le support informatique interne d'une ent
 
 ### À ajouter (pour renforcer le portfolio)
 
-- [ ] **Niveau de priorité** (Basse / Moyenne / Haute) par ticket, avec badge coloré dans le tableau de bord.
-- [ ] **Historique du ticket** — table `ticket_historique` journalisant création / prise en charge / clôture avec horodatage, affichée comme une mini-timeline sur la fiche ticket.
-- [ ] **Statistiques du tableau de bord** — compteurs "Ouverts / En cours / Résolus" en haut de la page d'accueil.
+- [x]  **Niveau de priorité** (Basse / Moyenne / Haute) par ticket, avec badge coloré dans le tableau de bord.
+- [x] **Historique du ticket** — table `ticket_historique` journalisant création / prise en charge / clôture avec horodatage, affichée comme une mini-timeline sur la fiche ticket.
+- [x] **Statistiques du tableau de bord** — compteurs "Ouverts / En cours / Résolus" en haut de la page d'accueil.
 - [ ] **Filtres combinés** — par statut et par catégorie, en plus de la recherche texte déjà existante.
 - [ ] **Protection CSRF** sur tous les formulaires (jeton caché vérifié côté serveur) — bon point à mettre en avant en entretien.
 - [ ] **Pagination** de la liste de tickets (au-delà de ~20 lignes).
