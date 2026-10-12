@@ -1,14 +1,16 @@
 <?php
 session_start();
 require_once '../models/ticket_list_model.php';
+require_once '../models/edit_ticket_model.php';
 require_once 'helpers.php';
 
 $recherche = $_GET["recherche"] ?? "";
-$triStatut = $_GET["statut"];
-$triCat = $_GET["categorie"];
-$resultat = list_tickets($recherche);
+$triStatut = $_GET["statut"] ?? "";
+$triCat = $_GET["categorie"] ?? "";
+$resultat = list_tickets($recherche, $triStatut, $triCat);
 $stats = count_tickets_by_statut();
 
+$categories = get_categories();
 ?>
 
 <!DOCTYPE html>
@@ -52,9 +54,27 @@ $stats = count_tickets_by_statut();
 
   <div class="content">
 
-    <form action="menu.php" method="GET">
+    <form action="dashboard.php" method="GET">
         <input type="text" name="recherche" value="<?= htmlspecialchars($_GET["recherche"]?? "" )?>" placeholder="Rechercher un ticket..." >
+
+            <select name="statut">
+                <option value="">Tous les statuts</option>
+                <option value="ouvert" <?= $triStatut == "ouvert" ? 'selected' : '' ?>>ouvert</option>
+                <option value="en_cours" <?= $triStatut == "en_cours" ? 'selected' : '' ?>>en_cours</option>
+                <option value="resolu" <?= $triStatut == "resolu" ? 'selected' : '' ?>>resolu</option>
+            </select>
+
+            <select name="categorie" id="">
+                <option value="">Toutes les catégories</option>
+             <?php foreach ($categories as $c): ?>
+                <option value=" <?= (int) $c['Categorie_id'] ?>" <?= $triCat == $c['Categorie_id'] ? 'selected' : '' ?>>
+                    <?= htmlspecialchars($c['Nom']) ?> 
+                </option>
+            <?php endforeach; ?>
+            </select>
+
         <button type="submit">Rechercher</button>
+
     </form>
 
 

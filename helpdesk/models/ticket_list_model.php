@@ -4,7 +4,7 @@ require_once '../config/db_connect.php';
 
 $pdo = getPDOConnection();
 
-function list_tickets($recherche, $statut, $categorie){
+function list_tickets($recherche, $statut = "", $categorie = ""){
     global $pdo;
    $sql = "SELECT 
             tickets.*,
@@ -20,11 +20,26 @@ function list_tickets($recherche, $statut, $categorie){
         LEFT JOIN Categorie ON Categorie.Categorie_id = ticket_categorie.categorie_id";
         
       $params = [];
+      $conditions = []; 
 
     if ($recherche !== "") {
-        $sql .= " WHERE tickets.titre LIKE :recherche1 OR tickets.description LIKE :recherche2";
+        $conditions[]= "( tickets.titre LIKE :recherche1 OR tickets.description LIKE :recherche2 )";
         $params[':recherche1'] = '%' . $recherche . '%';
         $params[':recherche2'] = '%' . $recherche . '%';
+    }
+
+    if ($statut !== "") {
+        $conditions[]= " tickets.statut = :statut ";
+        $params[':statut'] = $statut;
+    }
+
+    if ($categorie !== "") {
+         $conditions[]= " ticket_categorie.Categorie_id = :categorie ";
+         $params[':categorie'] = $categorie;
+    }
+
+      if (!empty($conditions)) {
+        $sql .= " WHERE " . implode(" AND ", $conditions);
     }
 
     $requete = $pdo->prepare($sql);

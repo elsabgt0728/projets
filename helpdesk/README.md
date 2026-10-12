@@ -24,7 +24,7 @@ Application de gestion de tickets pour le support informatique interne d'une ent
 - [x]  **Niveau de priorité** (Basse / Moyenne / Haute) par ticket, avec badge coloré dans le tableau de bord.
 - [x] **Historique du ticket** — table `ticket_historique` journalisant création / prise en charge / clôture avec horodatage, affichée comme une mini-timeline sur la fiche ticket.
 - [x] **Statistiques du tableau de bord** — compteurs "Ouverts / En cours / Résolus" en haut de la page d'accueil.
-- [ ] **Filtres combinés** — par statut et par catégorie, en plus de la recherche texte déjà existante.
+- [x] **Filtres combinés** — par statut et par catégorie, en plus de la recherche texte déjà existante.
 - [ ] **Protection CSRF** sur tous les formulaires (jeton caché vérifié côté serveur) — bon point à mettre en avant en entretien.
 - [ ] **Pagination** de la liste de tickets (au-delà de ~20 lignes).
 - [ ] **Tests unitaires** (PHPUnit) sur les fonctions des models (`create_ticket`, `assign_ticket_to_technicien`, etc.).
