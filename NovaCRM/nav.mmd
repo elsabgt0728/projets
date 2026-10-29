@@ -1,0 +1,107 @@
+
+flowchart TD
+
+    %% =========================
+    %% LÉGENDE
+    %% =========================
+    subgraph LEGEND["Légende"]
+        direction LR
+        PUB["Page publique"]
+        CON["Tous les connectés"]
+        MAN["Manager"]
+        ADM["Administrateur"]
+        CAS["Cas particulier"]
+    end
+
+    %% =========================
+    %% PAGES PUBLIQUES
+    %% =========================
+    ACCUEIL["Accueil"]
+    LOGIN["Connexion"]
+    LEGAL["Mentions légales"]
+
+    ACCUEIL --> LOGIN
+    ACCUEIL --> LEGAL
+    LEGAL -->|retour| ACCUEIL
+    LOGIN --> MENU["Menu principal"]
+
+    %% =========================
+    %% MENU PRINCIPAL
+    %% =========================
+    MENU --> KANBAN["Kanban des opportunités"]
+    MENU --> TACHES["Liste des tâches"]
+    MENU --> ENTREPRISES["Liste des entreprises avec recherche"]
+    MENU -->|manager| STATS["Statistiques"]
+    MENU -->|administrateur| USERS["Liste des utilisateurs"]
+    MENU -->|administrateur| ETAPES["Paramétrage des étapes"]
+    MENU -->|déconnexion| ACCUEIL
+
+    %% =========================
+    %% OPPORTUNITÉS
+    %% =========================
+    KANBAN --> FOPP["Fiche opportunité"]
+    KANBAN --> FORMOPP["Formulaire opportunité"]
+
+    FOPP --> FORMOPP
+    FOPP --> HIST["Historique des interactions"]
+    FOPP --> TACHES
+
+    HIST --> FORMINTER["Formulaire interaction"]
+    TACHES --> FORMTACHE["Formulaire tâche"]
+
+    %% =========================
+    %% ENTREPRISES ET CONTACTS
+    %% =========================
+    ENTREPRISES --> FORMENT["Formulaire entreprise"]
+    ENTREPRISES --> FENT["Fiche entreprise avec ses contacts"]
+
+    FENT --> FCONTACT["Fiche contact"]
+    FENT --> FORMCONTACT["Formulaire contact"]
+
+    FCONTACT --> FORMCONTACT
+    FCONTACT --> EXPORT["Export des données du contact"]
+    FCONTACT --> SUPPR["Confirmation de suppression"]
+
+    SUPPR -->|confirmer| FENT
+    SUPPR -->|annuler| FCONTACT
+
+    %% =========================
+    %% ADMINISTRATION
+    %% =========================
+    USERS --> FORMUSER["Formulaire utilisateur"]
+
+    %% =========================
+    %% CAS PARTICULIERS
+    %% =========================
+    subgraph CASPART["Cas particuliers"]
+        PROT["Page protégée sans connexion"]
+        DROITS["Page sans droits suffisants"]
+        INEX["Adresse inexistante"]
+        REF["Accès refusé"]
+        NOTFOUND["Page introuvable"]
+    end
+
+    PROT -->|redirection| LOGIN
+    DROITS --> REF
+    REF --> MENU
+    INEX --> NOTFOUND
+    NOTFOUND --> MENU
+
+    NAV["Barre de navigation sur toutes les pages connectées : menu, retour, déconnexion. Après validation d'un formulaire, retour à la page précédente (non dessiné)."]
+
+    %% =========================
+    %% STYLES
+    %% =========================
+    classDef public fill:#E7E6E6,stroke:#595959,color:#222;
+    classDef connected fill:#DDEBF7,stroke:#2F5597,color:#222;
+    classDef manager fill:#FCE4D6,stroke:#C55A11,color:#222;
+    classDef admin fill:#E4DFEC,stroke:#7030A0,color:#222;
+    classDef error fill:#FFF2CC,stroke:#BF9000,stroke-dasharray:4 3,color:#222;
+    classDef note fill:#FFFFFF,stroke:#999999,stroke-dasharray:2 2,color:#333;
+
+    class PUB,ACCUEIL,LOGIN,LEGAL public;
+    class CON,MENU,KANBAN,TACHES,ENTREPRISES,FOPP,FORMOPP,HIST,FORMINTER,FORMTACHE,FORMENT,FENT,FCONTACT,FORMCONTACT,EXPORT,SUPPR connected;
+    class MAN,STATS manager;
+    class ADM,USERS,ETAPES,FORMUSER admin;
+    class CAS,PROT,DROITS,INEX,REF,NOTFOUND error;
+    class NAV note;

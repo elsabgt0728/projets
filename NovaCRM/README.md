@@ -164,8 +164,8 @@ Elles sont détaillées dans les spécifications fonctionnelles. En voici le ré
 |:---:|---|---|
 | ✅ | Cahier des charges | Octobre 2026 |
 | ✅ | Spécifications fonctionnelles | Octobre 2026 |
-| ⬜ | Schéma de navigation | Octobre 2026 |
-| ⬜ | Maquettes Figma (mobile et bureau) et charte graphique | Novembre 2026 |
+| ✅ | Schéma de navigation | Octobre 2026 |
+| ✅ | Maquettes Figma (mobile et bureau) et charte graphique | Novembre 2026 |
 | ⬜ | Modèle de données (conceptuel, logique, physique), script de création, jeu d'essai de la base | Novembre 2026 |
 | ⬜ | Interfaces React fidèles aux maquettes (responsive, RGAA) et page publique HTML/CSS | Novembre à décembre 2026 |
 | ⬜ | API en couches, authentification, CRUD entreprises et contacts, Docker Compose | Décembre 2026 |
@@ -202,7 +202,7 @@ Le projet est considéré comme réussi si :
 | Fait | Période | Apprendre | Réaliser (projet CRM) | Dossier |
 |:---:|---|---|---|---|
 | ✅ | 15 au 31 oct. | C# : classes, héritage, interfaces, collections | Finaliser le cahier des charges, créer le dépôt Git, installer les outils, lancer la veille | Section contexte, début du journal de veille |
-| ⬜ | 15 au 31 oct. | C# : LINQ, exceptions, async, premiers tests xUnit | Spécifications fonctionnelles (règles métier, cas d'utilisation par rôle) | Résumé des spécifications |
+| ✅ | 15 au 31 oct. | C# : LINQ, exceptions, async, premiers tests xUnit | Spécifications fonctionnelles (règles métier, cas d'utilisation par rôle) | Résumé des spécifications |
 | ⬜ | 1 au 15 nov. | ASP.NET Core Web API et EF Core (mini-API jetable), révision SQL | Schéma de navigation, découverte de Figma sur un écran d'exercice | Schéma de navigation |
 | ⬜ | 1 au 15 nov. | JavaScript moderne (modules, async/await, fetch), HTML sémantique et RGAA | Mini-charte graphique, maquettes mobile | |
 | ⬜ | 16 au 30 nov. | Rythme allégé : début de la doc officielle de React (react.dev) | Maquettes bureau, relecture de cohérence avec le schéma | Section maquettes |
@@ -229,7 +229,35 @@ Le projet est considéré comme réussi si :
 | ⬜ | 30 avr. | Code gelé, tests passés |
 | ⬜ | 31 mai | Dossier, diaporama et procédure de déploiement finalisés |
 
-## 11. Glossaire
+## 11.pages de l'application
+## Pages de l'application
+
+| # | Page | Rôles | Fonct. | Mène vers |
+|---|---|---|---|---|
+| 1 | Accueil (publique) | Non connecté | F12 | Connexion, Mentions légales |
+| 2 | Connexion | Non connecté | F1 | Menu principal |
+| 3 | Mentions légales et confidentialité | Tous | RGPD | Retour |
+| 4 | Menu principal | Tous les connectés, boutons selon le rôle | F1 | Toutes les pages ci-dessous |
+| 5 | Kanban des opportunités (filtres, indicateurs de retard) | Commercial (les siennes), Manager (toutes) | F5, F6, F11 | Fiche opportunité, formulaire de création |
+| 6 | Fiche opportunité | Commercial (les siennes), Manager (toutes) | F4, F6, F7 | Formulaire de modification, Historique, Liste des tâches |
+| 7 | Historique des interactions (d'une opportunité) | Commercial (les siennes), Manager (toutes) | F7 | Formulaire interaction |
+| 8 | Liste des tâches | Commercial (les siennes), Manager (toutes) | F6 | Formulaire tâche |
+| 9 | Liste des entreprises (avec recherche) | Commercial (les siennes), Manager (toutes) | F2, F11 | Formulaire entreprise, Fiche entreprise |
+| 10 | Fiche entreprise (avec ses contacts) | Commercial (les siennes), Manager (toutes) | F2, F3 | Formulaire contact, Fiche contact |
+| 11 | Fiche contact | Commercial (les siennes), Manager (toutes) | F3, F10 | Formulaire contact, export, confirmation de suppression |
+| 12 | Statistiques (graphiques) | Manager | F8 | Retour |
+| 13 | Liste des utilisateurs | Administrateur | F9 | Formulaire utilisateur |
+| 14 | Paramétrage des étapes | Administrateur | F9 | Retour |
+
+## Écrans complémentaires
+
+| Type | Écrans |
+|---|---|
+| Formulaires | Opportunité (champ « commercial assigné » réservé au manager), interaction, tâche, entreprise, contact (avec consentement RGPD), utilisateur |
+| Confirmation | Confirmation de suppression |
+| Erreurs | Accès refusé, Page introuvable |
+
+## 12. Glossaire
 
 | Terme | Définition |
 |---|---|
